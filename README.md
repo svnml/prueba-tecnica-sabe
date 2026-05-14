@@ -7,28 +7,30 @@ Despliegue de una aplicación web frontend en Kubernetes usando "httpd:alpine" c
 | Minikube       | v1.38.1 |
 | Kubernetes     | v1.35.1 |
 | kubectl        | v1.36.0 |
-| Docker Desktop | Any     |
+
 ### Estructura del repositorio
 .
-├── deploy.sh                             # Script de despliegue
-├── k8s                                         # Directorio de manifiestos
-│   ├── configmap.yaml           # HTML personalizado
-│   ├── deployment.yaml        # Deployment con 3 réplicas y rolling update
-│   ├── ingress.yaml                  # Ingress con host en devops-test.local
-│   └── service.yaml                  # Service tipo ClusterIP
+├── deploy.sh # Script de despliegue con Rolling Update
+├── install.sh # Script de instalación general
+├── k8s # Directorio de manifiestos
+│   ├── configmap.yaml # HTML
+│   ├── deployment.yaml # Deploy con 3 replicas y Rolling Update
+│   ├── ingress.yaml # Ingress con host en devops-test.local
+│   └── service.yaml #Service tipo ClusterIP
 └── README.md
+
 
 ### Requisitos para instalar este repositorio
 
-1. Tener Docker Desktop activo
-2.  Instalar **minikube** 
+1. Tener Docker Desktop o Docker Engine activo
+2. Instalar **minikube** 
 ```
 curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
 minikube version
 
 ```
-2. Instalar **kubectl**
+3. Instalar **kubectl**
 ```
 curl -LO https://dl.k8s.io/release/v1.36.0/bin/linux/amd64/kubectl
 chmod +x kubectl
@@ -36,12 +38,12 @@ sudo mv kubectl /usr/local/bin/kubectl
 kubectl version --client
 
 ```
-3. Clonar el repositorio
+4. Clonar el repositorio
 ```
 git clone https://github.com/svnml/prueba-tecnica-sabe.git
 cd prueba-tecnica-sabe
 ```
-4.  Desplegar la aplicación
+5. Desplegar la aplicación
 ```
 # Dar permisos de ejecución a los script
 chmod +x install.sh
@@ -62,6 +64,8 @@ El script realiza automáticamente los siguientes pasos:
 3. Espera que el controlador de "ingress-nginx" esté listo
 4. Aplica los manifiestos (ConfigMap, Service, Ingress, Deployment)
 5. Espera el rollout sin downtime y revisa los pods desplegados
+6. Configura el host devops-test.local en /etc/hosts
+7. Corre minikube tunnel
 
 Una vez instalada la aplicación con *minikube tunnel* corriendo, podemos realizar los Rolling Updates ejecutando en otra terminal:
 ```
@@ -90,4 +94,4 @@ Acceder a la aplicación
 ```
 curl http://devops-test.local
 ```
-o acceder a la aplicación con el navegador en http://devops-test.local# prueba-tecnica-sabe
+o acceder a la aplicación con el navegador en http://devops-test.local
