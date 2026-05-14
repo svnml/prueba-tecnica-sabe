@@ -44,7 +44,20 @@ kubectl rollout status deployment/frontend
 # verificar los pods actuales
 kubectl get pods
 
-# 
+# configurar /etc/hosts
+MINIKUBE_IP=$(minikube ip)
+if ping -c 1 -W 1 "$MINIKUBE_IP" &>/dev/null; then
+  HOSTS_IP="$MINIKUBE_IP"
+else
+  HOSTS_IP="127.0.0.1"
+fi
+HOSTS_ENTRY="${HOSTS_IP} devops-test.local"
+
+if grep -qF "devops-test.local" /etc/hosts; then
+  sudo sed -i "s|.*devops-test.local|${HOSTS_ENTRY}|" /etc/hosts
+else
+  echo "${HOSTS_ENTRY}" | sudo tee -a /etc/hosts > /dev/null
+fi
+echo "Entrada en /etc/hosts: ${HOSTS_ENTRY}"
+
 minikube tunnel
-
-
