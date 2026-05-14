@@ -56,12 +56,12 @@ chmod +x deploy.sh
 ./install.sh 2.4-alpine
 ./install.sh latest-alpine
 ```
-	El script realiza automáticamente los siguientes pasos:
-		1. Arranca minikube si no está en ejecución
-		2. Habilita el addon Ingress
-		3. Espera que el controlador de "ingress-nginx" esté listo
-		4. Aplica los manifiestos (ConfigMap, Service, Ingress, Deployment)
-		5. Espera el rollout sin downtime y revisa los pods desplegados
+El script realiza automáticamente los siguientes pasos:
+	1. Arranca minikube si no está en ejecución
+	2. Habilita el addon Ingress
+	3. Espera que el controlador de "ingress-nginx" esté listo
+	4. Aplica los manifiestos (ConfigMap, Service, Ingress, Deployment)
+	5. Espera el rollout sin downtime y revisa los pods desplegados
 
 Una vez instalada la aplicación con *minikube tunnel* corriendo, podemos realizar los Rolling Updates ejecutando en otra terminal:
 ```
